@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Company.RestApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CompanyController(IMediator mediator) : ControllerBase
