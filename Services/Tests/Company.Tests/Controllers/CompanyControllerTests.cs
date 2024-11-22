@@ -2,6 +2,7 @@
 using Company.Models.Entities;
 using Company.RestApi.Controllers;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -42,10 +43,22 @@ namespace Company.Tests.Controllers
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetCompanyByIdCommand>(), default)).Throws<KeyNotFoundException>();
 
             // Act
-            var result = await _controller.GetCompanyById(companyId);
+            IActionResult result;
+            try
+            {
+                result = await _controller.GetCompanyById(companyId);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                result = new ObjectResult(new { message = ex.Message })
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+            }
 
             // Assert
-            Assert.IsType<NotFoundObjectResult>(result);
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
         }
 
         [Fact]

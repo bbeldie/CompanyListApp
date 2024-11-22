@@ -52,6 +52,7 @@ namespace Company.RestApi
             app.UseAuthorization();
 
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
             app.MapControllers();
 
