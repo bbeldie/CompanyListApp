@@ -1,0 +1,39 @@
+<h2>Company List</h2>
+
+<div class="action-buttons">
+    <button class="btn btn-primary" routerLink="/add-company">Add New Company</button>
+
+    <div class="filter-container">
+        <input class="filter-input" type="text" [(ngModel)]="filters.name" placeholder="Filter by Company Name"
+            (input)="applyFilters()" />
+
+        <input class="filter-input" type="text" [(ngModel)]="filters.isin" placeholder="Filter by ISIN"
+            (input)="applyFilters()" />
+    </div>
+
+    <button class="btn btn-secondary" (click)="logout()">Logout</button>
+</div>
+
+<div *ngIf="companies.length > 0; else noCompanies">
+    <table>
+        <thead>
+            <tr>
+                <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let company of companies">
+                <td *ngFor="let column of displayedColumns">
+                    <span *ngIf="column !== 'actions'">{{ company[column] }}</span>
+                    <button *ngIf="column === 'actions'" (click)="editCompany(company.id)">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #noCompanies>
+    <p>No companies found.</p>
+</ng-template>

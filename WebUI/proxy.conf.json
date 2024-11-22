@@ -1,0 +1,12 @@
+{
+    "/api/company": {
+        "target": "https://localhost:44311/",
+        "changeOrigin": true,
+        "secure": false
+    },
+    "/api/usermanagement": {
+        "target": "https://localhost:44330/",
+        "changeOrigin": true,
+        "secure": false
+    }
+}
